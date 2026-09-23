@@ -154,8 +154,8 @@ namespace MathDungeon.Core
         }
 
         /// <summary>
-        /// Records that a dungeon is finished and auto-saves. Unlocking the next
-        /// dungeon belongs to the dungeon system, not to this one.
+        /// Records that a dungeon is finished, unlocks the next one in the linear
+        /// chain, and auto-saves.
         /// </summary>
         public void NotifyDungeonCompleted(int dungeonId)
         {
@@ -166,7 +166,29 @@ namespace MathDungeon.Core
             }
 
             progress.completed = true;
+            UnlockDungeon(dungeonId + 1);
             AutoSave(SaveTrigger.DungeonCompleted);
+        }
+
+        /// <summary>
+        /// Grants access to a dungeon. Dungeons unlock linearly, so this is only
+        /// ever called with the dungeon after the one just completed; ids past the
+        /// last dungeon are ignored, which is what finishing the game looks like.
+        /// </summary>
+        public bool UnlockDungeon(int dungeonId)
+        {
+            if (!HasActiveProfile || !GameConstants.IsValidDungeonId(dungeonId))
+            {
+                return false;
+            }
+
+            if (ActiveProfile.IsDungeonUnlocked(dungeonId))
+            {
+                return false;
+            }
+
+            ActiveProfile.unlockedDungeons.Add(dungeonId);
+            return true;
         }
 
         /// <summary>Records the most recent checkpoint (e.g. "d2_c3") and auto-saves (FR3).</summary>

@@ -25,6 +25,15 @@ This file is the single source of truth for any AI assistant (Claude Code via Un
 - `dev` — integration branch. Everything merges here first.
 - `feature/<milestone-name>` — one branch per milestone, matching the milestone order below (e.g. `feature/save-system`, `feature/enemy-ai`, `feature/dungeon-progression`).
 - Never commit directly to `main`. PRs/merges go into `dev`; `dev` is squash-merged into `main` only at a working checkpoint (end of a milestone, verified playable).
+- **Squash merges into `main` conflict every time, and that is expected.** A squash commit records no merge parent, so git still treats `main`'s merge base as the first commit and reports every changed file as divergent. `main` is by definition "`dev` at a checkpoint", so resolve it by taking `dev` wholesale rather than hand-merging hunks:
+  ```
+  git checkout main
+  git merge --squash dev          # reports conflicts - expected
+  git checkout dev -- .           # take dev's content for every path
+  git add -A && git commit
+  ```
+  Then verify the squash was faithful before pushing — these must print the same hash:
+  `git rev-parse main^{tree}` and `git rev-parse dev^{tree}`.
 - Only one person/session edits a given scene at a time — Unity scenes/prefabs still conflict badly even as text (YAML). Prefer prefab variants over duplicating scenes.
 - Git LFS is used for binary assets (FBX, textures, audio from KayKit) — do not commit large binaries directly to git.
 - Commit messages: short imperative summary, e.g. `Add ChallengeManager answer validation`, referencing the milestone (`M4: ...`) when useful.
@@ -88,8 +97,7 @@ Assets/
       Dungeon2.unity
       Dungeon3.unity
     Art/              # Imported KayKit packs live here, untouched/unmodified where possible
-      KayKit/         # The three imported packs, as shipped
-      Animation/      # Our own Animator Controllers (PlayerAnimator, EnemyAnimator, ...)
+    Animation/        # Animator Controllers, blend trees (character locomotion etc.)
     Audio/
 docs/
   Math_Dungeon_SRS.pdf   # source of truth, see top of this file
@@ -97,11 +105,11 @@ docs/
 
 ## Coding conventions
 
+- **Animation is in scope for every rigged character**, not just polish — this was originally missing from the milestone list and caused a real bug (Knight had no locomotion animation after M3). Any character with a KayKit rig (player, enemy in M5) needs its Animator Controller wired (minimum: Idle/Walk/Run or equivalent blend tree driven by actual movement speed) as part of the milestone that introduces it, not deferred to M7 polish.
 - `GameManager` is a persistent singleton (`DontDestroyOnLoad`), owns save state and scene transitions.
 - No magic numbers in gameplay code — reference the constants above via a `GameConstants.cs` static class (e.g. `GameConstants.MaxHearts = 3`, `GameConstants.ChallengesPerDungeon = 4`).
 - Challenge content lives in data (ScriptableObjects), never hardcoded as strings inside MonoBehaviours.
 - Every script should be small and single-responsibility — this project is judged partly on architecture (see SRS §1.5 Application Architecture Diagram: Presentation / Logic / Persistence layers). Keep that separation.
-- **Animation is mandatory, not deferred.** Any milestone that introduces a rigged character must also deliver its Animator Controller in that same milestone — never postponed to the UI/polish milestone. Minimum is an idle state plus whatever motion that character actually performs (locomotion blended on speed for anything that moves). The KayKit packs ship shared `Rig_Medium` clips that bind to `Rig_Medium/root/...`, so a KayKit character with the same rig plays them directly as Generic clips with no retargeting; set the looping clips to loop in the model importer. Controllers live in `Assets/_Project/Art/Animation/`.
 
 ## Working process for the assistant
 

@@ -56,12 +56,38 @@ namespace MathDungeon.Challenges
             }
         }
 
+        private void Start()
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.StateChanged += OnGameStateChanged;
+            }
+        }
+
         private void OnDisable()
         {
             if (challengeUI != null)
             {
                 challengeUI.AnswerSubmitted -= OnAnswerSubmitted;
                 challengeUI.ContinueRequested -= CloseChallenge;
+            }
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.StateChanged -= OnGameStateChanged;
+            }
+        }
+
+        /// <summary>
+        /// Something outside the challenge changed the game state - Game Over, or
+        /// the run finishing. Close the panel so it cannot sit on top of whatever
+        /// screen that state owns.
+        /// </summary>
+        private void OnGameStateChanged(GameState state)
+        {
+            if (state != GameState.InChallenge && IsChallengeOpen)
+            {
+                EndChallenge(false, restoreExploring: false);
             }
         }
 
