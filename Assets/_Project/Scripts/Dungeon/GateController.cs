@@ -97,6 +97,13 @@ namespace MathDungeon.Dungeon
         /// </summary>
         public void Advance()
         {
+            // A shut gate leads nowhere, however it was called from.
+            if (!isOpen)
+            {
+                transitioning = false;
+                return;
+            }
+
             GameManager manager = GameManager.Instance;
             if (manager == null || dungeonManager == null)
             {

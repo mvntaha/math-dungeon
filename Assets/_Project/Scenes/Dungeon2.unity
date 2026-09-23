@@ -211,52 +211,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2634147639830484596, guid: 90fbd59e61225bf42b2b95e46f3bb50d, type: 3}
---- !u!1 &6747781
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6747783}
-  - component: {fileID: 6747782}
-  m_Layer: 0
-  m_Name: DEV_SceneBootstrap (REMOVE IN M7)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &6747782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6747781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90883bebc1970f9449bc333834e46ab8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Dungeon.DevSceneBootstrap
-  fallbackUsername: DevTester
-  fallbackAvatarId: avatar_01
---- !u!4 &6747783
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6747781}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &20072761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1586,6 +1540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 394794990}
   - component: {fileID: 394794989}
+  - component: {fileID: 394794991}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1622,6 +1577,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &394794991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394794988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf80a4b786d5c648982afd579a7f09b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Core.SessionTracker
 --- !u!1 &417407865
 GameObject:
   m_ObjectHideFlags: 0
@@ -3914,6 +3881,7 @@ GameObject:
   m_Component:
   - component: {fileID: 966264373}
   - component: {fileID: 966264372}
+  - component: {fileID: 966264374}
   m_Layer: 0
   m_Name: DungeonManager
   m_TagString: Untagged
@@ -3950,6 +3918,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &966264374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966264371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0692ce4b93d9ce74d801dfb71c31893f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Dungeon.DungeonTimer
+  dungeonId: 2
+  flushInterval: 1
 --- !u!1 &979085719
 GameObject:
   m_ObjectHideFlags: 0
@@ -8215,7 +8197,6 @@ SceneRoots:
   - {fileID: 181134067}
   - {fileID: 1552606719}
   - {fileID: 242139423}
-  - {fileID: 6747783}
   - {fileID: 722541234}
   - {fileID: 394040451}
   - {fileID: 966264373}
