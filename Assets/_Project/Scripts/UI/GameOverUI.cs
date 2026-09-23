@@ -21,7 +21,10 @@ namespace MathDungeon.UI
         [SerializeField] private Button mainMenuButton;
 
         [Header("Retry")]
-        [Tooltip("Where the player is placed when retrying the zone. Falls back to their current spot.")]
+        [Tooltip("Retry sends the player back to their last checkpoint. Found in the scene when empty.")]
+        [SerializeField] private MathDungeon.Dungeon.CheckpointSystem checkpointSystem;
+
+        [Tooltip("Used only when there is no checkpoint system in the scene.")]
         [SerializeField] private Transform retrySpawnPoint;
 
         [SerializeField] private PlayerHealth playerHealth;
@@ -33,6 +36,11 @@ namespace MathDungeon.UI
             if (playerHealth == null)
             {
                 playerHealth = FindFirstObjectByType<PlayerHealth>();
+            }
+
+            if (checkpointSystem == null)
+            {
+                checkpointSystem = FindFirstObjectByType<MathDungeon.Dungeon.CheckpointSystem>();
             }
 
             if (retryButton != null)
@@ -75,7 +83,13 @@ namespace MathDungeon.UI
         {
             playerHealth?.RefillHearts();
 
-            if (retrySpawnPoint != null)
+            // Retrying "the current challenge zone" (FR6) means the last checkpoint
+            // reached, not the top of the dungeon.
+            if (checkpointSystem != null)
+            {
+                checkpointSystem.PlacePlayerAtResumePoint();
+            }
+            else if (retrySpawnPoint != null)
             {
                 MovePlayerTo(retrySpawnPoint.position);
             }
