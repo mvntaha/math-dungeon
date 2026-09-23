@@ -32,8 +32,11 @@ namespace MathDungeon.Player
         [Header("References")]
         [Tooltip("Movement is relative to this camera. Falls back to Camera.main.")]
         [SerializeField] private Transform cameraTransform;
-        [Tooltip("Optional. Receives a 'Speed' float for a locomotion blend tree.")]
+        [Tooltip("Receives a 'Speed' float for the locomotion blend tree.")]
         [SerializeField] private Animator animator;
+
+        [Tooltip("Smoothing on the animator's Speed value, to stop the blend snapping.")]
+        [SerializeField] private float animatorDampTime = 0.1f;
 
         private CharacterController controller;
         private InputAction moveAction;
@@ -41,7 +44,11 @@ namespace MathDungeon.Player
         private float turnSmoothVelocity;
         private bool animatorHasSpeed;
 
-        /// <summary>Planar speed in units per second, for the HUD or animation.</summary>
+        /// <summary>
+        /// Actual planar speed in units per second, measured from the controller
+        /// rather than from the input. Walking into a wall therefore reads as
+        /// standing still, which is what the locomotion blend tree should show.
+        /// </summary>
         public float CurrentSpeed { get; private set; }
 
         private void Awake()
@@ -82,15 +89,19 @@ namespace MathDungeon.Player
                 : Vector2.zero;
 
             Vector3 motion = BuildPlanarMotion(input);
-            CurrentSpeed = motion.magnitude;
 
             ApplyGravity();
 
             controller.Move((motion + Vector3.up * verticalVelocity) * Time.deltaTime);
 
+            // Measured after the move, so collisions and slopes are accounted for.
+            Vector3 planarVelocity = controller.velocity;
+            planarVelocity.y = 0f;
+            CurrentSpeed = planarVelocity.magnitude;
+
             if (animatorHasSpeed)
             {
-                animator.SetFloat(SpeedParameter, CurrentSpeed);
+                animator.SetFloat(SpeedParameter, CurrentSpeed, animatorDampTime, Time.deltaTime);
             }
         }
 

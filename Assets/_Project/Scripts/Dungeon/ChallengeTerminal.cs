@@ -1,3 +1,4 @@
+using MathDungeon.Challenges;
 using MathDungeon.Player;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,11 +30,40 @@ namespace MathDungeon.Dungeon
         [Tooltip("Raised when the player activates this terminal. M4 listens here.")]
         [SerializeField] private UnityEvent<int> activated;
 
+        private ChallengeManager challengeManager;
+
         public int ChallengeId => challengeId;
 
         public string InteractionPrompt => prompt;
 
         public bool CanInteract => !solved;
+
+        private void OnEnable()
+        {
+            // Listen for this terminal's own challenge being solved so it stops
+            // offering it, including when the manager is reached via its UnityEvent.
+            challengeManager = FindFirstObjectByType<ChallengeManager>();
+            if (challengeManager != null)
+            {
+                challengeManager.ChallengeSolved += OnChallengeSolved;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (challengeManager != null)
+            {
+                challengeManager.ChallengeSolved -= OnChallengeSolved;
+            }
+        }
+
+        private void OnChallengeSolved(int solvedChallengeId)
+        {
+            if (solvedChallengeId == challengeId)
+            {
+                MarkSolved();
+            }
+        }
 
         public void Interact(PlayerInteraction interactor)
         {
