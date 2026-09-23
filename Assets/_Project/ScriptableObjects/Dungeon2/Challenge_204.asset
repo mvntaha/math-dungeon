@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9d33941c5a14f4bbede16fea8b6806, type: 3}
+  m_Name: Challenge_204
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Challenges.ChallengeData
+  challenge:
+    challengeId: 204
+    dungeonId: 2
+    topic: Area and square numbers
+    questionType: 2
+    promptText: Square tiles with sides 1, 2 and 3 cover 1, 4 and 9 squares. How
+      many squares does a tile with side 4 cover?
+    options: []
+    correctAnswer: 16
+    hintText: Each area is the side length multiplied by itself.
+    explanationText: "4 \xD7 4 = 16 squares."

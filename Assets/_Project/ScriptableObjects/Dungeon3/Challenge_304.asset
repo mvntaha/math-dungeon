@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9d33941c5a14f4bbede16fea8b6806, type: 3}
+  m_Name: Challenge_304
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Challenges.ChallengeData
+  challenge:
+    challengeId: 304
+    dungeonId: 3
+    topic: Number relationships
+    questionType: 2
+    promptText: "The stairs are carved 1, 1, 2, 3, 5, 8, \u2026 What number is on
+      the next step?"
+    options: []
+    correctAnswer: 13
+    hintText: Add the two numbers that come before it.
+    explanationText: 5 + 8 = 13.
