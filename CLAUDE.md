@@ -16,8 +16,7 @@ This file is the single source of truth for any AI assistant (Claude Code via Un
   - `KayKit – Character Pack: Adventurers` → player character
   - `KayKit – Character Pack: Skeletons` → the single enemy
   - Do not introduce assets from a different visual style without asking first — consistency matters for the demo video.
-- **Version control**: git + GitHub (NOT Plastic SCM). Repo: `mvntaha/math-dungeon` (public). Project Settings has "Visible Meta Files" + "Force Text" serialization enabled so scenes/prefabs are diffable. Git LFS tracks binary assets (FBX/textures/audio) per `.gitattributes`; `Packages/manifest.json` and `packages-lock.json` are committed (NOT ignored) so a fresh clone resolves URP/AI Navigation/Newtonsoft correctly.
-  - **Watch out**: `com.unity.collab-proxy` (Unity Version Control) silently reverts Version Control mode from "Visible Meta Files" back to "Unity Version Control". If it reverts again, remove the package (Window > Package Manager > Unity Version Control) rather than re-fixing the setting by hand, and commit the removal. Check `git diff ProjectSettings/` before committing until it stops.
+- **Version control**: git + GitHub (NOT Plastic SCM). Repo: `mvntaha/math-dungeon` (public, by choice). Project Settings has "Visible Meta Files" + "Force Text" serialization enabled so scenes/prefabs are diffable. Git LFS tracks binary assets (FBX/textures/audio) per `.gitattributes`; `Packages/manifest.json` and `packages-lock.json` are committed (NOT ignored) so a fresh clone resolves URP/AI Navigation/Newtonsoft correctly. `com.unity.collab-proxy` (Unity Version Control/Plastic package) keeps silently reverting the Version Control mode setting — if it recurs, remove that package rather than re-fixing the setting each time.
 - **JSON serialization**: Newtonsoft Json.NET (`com.unity.nuget.newtonsoft-json`), not `JsonUtility` — required because `DungeonProgress.attemptsPerChallenge` is a `Dictionary<int,int>` per the SRS's keyed-object shape, which `JsonUtility` cannot serialize.
 
 ## Git workflow — follow this exactly
@@ -89,6 +88,8 @@ Assets/
       Dungeon2.unity
       Dungeon3.unity
     Art/              # Imported KayKit packs live here, untouched/unmodified where possible
+      KayKit/         # The three imported packs, as shipped
+      Animation/      # Our own Animator Controllers (PlayerAnimator, EnemyAnimator, ...)
     Audio/
 docs/
   Math_Dungeon_SRS.pdf   # source of truth, see top of this file
@@ -100,6 +101,7 @@ docs/
 - No magic numbers in gameplay code — reference the constants above via a `GameConstants.cs` static class (e.g. `GameConstants.MaxHearts = 3`, `GameConstants.ChallengesPerDungeon = 4`).
 - Challenge content lives in data (ScriptableObjects), never hardcoded as strings inside MonoBehaviours.
 - Every script should be small and single-responsibility — this project is judged partly on architecture (see SRS §1.5 Application Architecture Diagram: Presentation / Logic / Persistence layers). Keep that separation.
+- **Animation is mandatory, not deferred.** Any milestone that introduces a rigged character must also deliver its Animator Controller in that same milestone — never postponed to the UI/polish milestone. Minimum is an idle state plus whatever motion that character actually performs (locomotion blended on speed for anything that moves). The KayKit packs ship shared `Rig_Medium` clips that bind to `Rig_Medium/root/...`, so a KayKit character with the same rig plays them directly as Generic clips with no retargeting; set the looping clips to loop in the model importer. Controllers live in `Assets/_Project/Art/Animation/`.
 
 ## Working process for the assistant
 
