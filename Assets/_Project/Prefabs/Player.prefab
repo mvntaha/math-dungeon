@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6944985267100916286}
   - component: {fileID: 450722862331736385}
   - component: {fileID: 5276509307610333361}
+  - component: {fileID: 3864729740616301350}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +100,18 @@ MonoBehaviour:
     m_Bits: 4294967295
   interactArcDegrees: 160
   detectionOffset: {x: 0, y: 1, z: 0}
+--- !u!114 &3864729740616301350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8981326983730265307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 333b896bda22a154693611042f2df23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Player.PlayerHealth
 --- !u!1001 &9113775149866898659
 PrefabInstance:
   m_ObjectHideFlags: 0
