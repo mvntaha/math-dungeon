@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9d33941c5a14f4bbede16fea8b6806, type: 3}
+  m_Name: Challenge_201
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Challenges.ChallengeData
+  challenge:
+    challengeId: 201
+    dungeonId: 2
+    topic: Angle relationships
+    questionType: 0
+    promptText: "Two angles meet along a straight beam. One of them measures 115\xB0.
+      What is the other?"
+    options:
+    - "65\xB0"
+    - "75\xB0"
+    - "85\xB0"
+    - "45\xB0"
+    correctAnswer: "65\xB0"
+    hintText: "Angles on a straight line add up to 180\xB0."
+    explanationText: "180\xB0 \u2212 115\xB0 = 65\xB0."

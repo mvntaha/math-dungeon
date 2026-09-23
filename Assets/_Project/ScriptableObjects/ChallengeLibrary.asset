@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09450b371970d9944be47fd4e976a696, type: 3}
+  m_Name: ChallengeLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Challenges.ChallengeLibrary
+  challenges:
+  - {fileID: 11400000, guid: f7e9e3cb0b431234bb6fbd6d8e1b27a1, type: 2}
+  - {fileID: 11400000, guid: 1469b1c754f7fd5458dae68d055a9006, type: 2}
+  - {fileID: 11400000, guid: 339da96c6b68f4c45baec87d34ac85bc, type: 2}
+  - {fileID: 11400000, guid: 0722cbdb825ece849a62a3e8619bca0f, type: 2}
+  - {fileID: 11400000, guid: 1b09ca7c385862a419d3e92e741dcc87, type: 2}
+  - {fileID: 11400000, guid: 5f7268b989e022b41a3bae7ce1085a3b, type: 2}
+  - {fileID: 11400000, guid: e7e0c0018f62cdc4c9a71bdc64896bcf, type: 2}
+  - {fileID: 11400000, guid: abfa76f0350cdd244969616ede0e3b7b, type: 2}
+  - {fileID: 11400000, guid: 77bdaee9f34307f479d7a5d78cbc1205, type: 2}
+  - {fileID: 11400000, guid: dd1dff0f7483c034c97c31dabed31c37, type: 2}
+  - {fileID: 11400000, guid: 861f4085f5040e140a3e38b25fdcb26e, type: 2}
+  - {fileID: 11400000, guid: 23600abd496b3a24780cf7dbdb7a8bc8, type: 2}

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9d33941c5a14f4bbede16fea8b6806, type: 3}
+  m_Name: Challenge_102
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Challenges.ChallengeData
+  challenge:
+    challengeId: 102
+    dungeonId: 1
+    topic: Comparing fractions
+    questionType: 0
+    promptText: Two keys are marked 3/4 and 2/3. Which key is worth more?
+    options:
+    - 3/4
+    - 2/3
+    - They are equal
+    - It cannot be decided
+    correctAnswer: 3/4
+    hintText: Rewrite both fractions with the same denominator, 12.
+    explanationText: 3/4 = 9/12 and 2/3 = 8/12, so 3/4 is the larger key.

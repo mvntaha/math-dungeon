@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9d33941c5a14f4bbede16fea8b6806, type: 3}
+  m_Name: Challenge_302
+  m_EditorClassIdentifier: Assembly-CSharp::MathDungeon.Challenges.ChallengeData
+  challenge:
+    challengeId: 302
+    dungeonId: 3
+    topic: Logical reasoning
+    questionType: 0
+    promptText: 'Four of these seals are square numbers: 4, 9, 16, 20, 25. Which
+      one is not?'
+    options:
+    - 9
+    - 16
+    - 20
+    - 25
+    correctAnswer: 20
+    hintText: A square number is a whole number multiplied by itself.
+    explanationText: "4 = 2\xB2, 9 = 3\xB2, 16 = 4\xB2 and 25 = 5\xB2. 20 is not
+      a square number."
