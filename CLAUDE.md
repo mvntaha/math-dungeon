@@ -29,11 +29,16 @@ This file is the single source of truth for any AI assistant (Claude Code via Un
   ```
   git checkout main
   git merge --squash dev          # reports conflicts - expected
-  git checkout dev -- .           # take dev's content for every path
-  git add -A && git commit
+  git read-tree -u --reset dev    # make index + worktree exactly dev
+  git commit
   ```
-  Then verify the squash was faithful before pushing — these must print the same hash:
-  `git rev-parse main^{tree}` and `git rev-parse dev^{tree}`.
+  **Verify before pushing.** These two must print the same hash:
+  ```
+  git rev-parse main^{tree}
+  git rev-parse dev^{tree}
+  ```
+  The check has to *gate* the push, not sit next to it. Do not write it as one `&&`/`||` chain — in `[ "$a" = "$b" ] && echo MATCH || echo MISMATCH && git push`, the `&&` binds to the `echo MISMATCH`, so a failed check still pushes. That is exactly how a bad `main` reached the remote at the M6 checkpoint. Run the two `rev-parse` commands, read the result yourself, and only then push.
+  Do not resolve this with `git checkout dev -- .`. It restores paths that exist in `dev` but leaves behind paths that only exist on `main`, so anything deleted or moved since the last checkpoint silently survives — that exact mistake put stale duplicate Animator Controllers on `main` at the M6 checkpoint.
 - Only one person/session edits a given scene at a time — Unity scenes/prefabs still conflict badly even as text (YAML). Prefer prefab variants over duplicating scenes.
 - Git LFS is used for binary assets (FBX, textures, audio from KayKit) — do not commit large binaries directly to git.
 - Commit messages: short imperative summary, e.g. `Add ChallengeManager answer validation`, referencing the milestone (`M4: ...`) when useful.
@@ -96,8 +101,12 @@ Assets/
       Dungeon1.unity
       Dungeon2.unity
       Dungeon3.unity
-    Art/              # Imported KayKit packs live here, untouched/unmodified where possible
-    Animation/        # Animator Controllers, blend trees (character locomotion etc.)
+    Art/              # explicit path: Assets/_Project/Art/
+      KayKit/         # the three imported packs, untouched/unmodified where possible
+    Animation/        # Animator Controllers and blend trees (character locomotion etc.)
+                      # explicit path: Assets/_Project/Animation/  -- a SIBLING of Art/,
+                      # NOT Art/Animation/. Art/ holds imported assets only; anything we
+                      # author ourselves lives outside it. This has moved twice; leave it.
     Audio/
 docs/
   Math_Dungeon_SRS.pdf   # source of truth, see top of this file
