@@ -11,12 +11,14 @@ This file is the single source of truth for any AI assistant (Claude Code via Un
 - **Persistence**: Local single-file JSON only. No cloud save, no online accounts, no server calls anywhere in this project.
 - **AI**: One enemy type, Unity `NavMeshAgent`-based patrol/chase only. No ML-Agents, no custom pathfinding, no multiple enemy types.
 - **DOTS/ECS**: Used ONLY for collectible coin entities, as a separate pipeline that does not share runtime with the GameObject/MonoBehaviour enemy AI. Do not convert the whole project to ECS. Do not put player, enemy, or UI logic in ECS.
-- **Art assets**: KayKit by Kay Lousberg (itch.io) — free, low-poly, rigged:
-  - `KayKit – Dungeon Pack Remastered` → environment/props
+- **Art assets**: KayKit by Kay Lousberg (itch.io) — free, low-poly, rigged. Imported into `Assets/_Project/Art/KayKit/`:
+  - `KayKit – Dungeon Pack` (current release, not the "(Legacy)" one) → environment/props
   - `KayKit – Character Pack: Adventurers` → player character
   - `KayKit – Character Pack: Skeletons` → the single enemy
   - Do not introduce assets from a different visual style without asking first — consistency matters for the demo video.
-- **Version control**: git + GitHub (NOT Plastic SCM, even though the Unity project was initially created with it). Project Settings must have "Visible Meta Files" + "Force Text" serialization enabled so scenes/prefabs are diffable.
+- **Version control**: git + GitHub (NOT Plastic SCM). Repo: `mvntaha/math-dungeon` (public). Project Settings has "Visible Meta Files" + "Force Text" serialization enabled so scenes/prefabs are diffable. Git LFS tracks binary assets (FBX/textures/audio) per `.gitattributes`; `Packages/manifest.json` and `packages-lock.json` are committed (NOT ignored) so a fresh clone resolves URP/AI Navigation/Newtonsoft correctly.
+  - **Watch out**: `com.unity.collab-proxy` (Unity Version Control) silently reverts Version Control mode from "Visible Meta Files" back to "Unity Version Control". If it reverts again, remove the package (Window > Package Manager > Unity Version Control) rather than re-fixing the setting by hand, and commit the removal. Check `git diff ProjectSettings/` before committing until it stops.
+- **JSON serialization**: Newtonsoft Json.NET (`com.unity.nuget.newtonsoft-json`), not `JsonUtility` — required because `DungeonProgress.attemptsPerChallenge` is a `Dictionary<int,int>` per the SRS's keyed-object shape, which `JsonUtility` cannot serialize.
 
 ## Git workflow — follow this exactly
 
