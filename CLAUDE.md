@@ -8,15 +8,15 @@ This file is the single source of truth for any AI assistant (Claude Code via Un
 - **Render Pipeline**: URP (Universal Render Pipeline)
 - **Language**: C#
 - **Platform**: Windows + macOS desktop only. No mobile, no console, no web build. Do not add platform-specific code for anything else unless explicitly asked.
-- **Persistence**: Local single-file JSON only. No cloud save, no online accounts, no server calls anywhere in this project.
+- **Persistence**: Local single-file JSON only. No cloud save, no online accounts, no server calls anywhere in this project. Serialization goes through **Newtonsoft Json.NET** (`com.unity.nuget.newtonsoft-json`), not `JsonUtility` — `JsonUtility` cannot serialize dictionaries, and the SRS save shape requires them. Save file: `Application.persistentDataPath/mathdungeon_save.json`, written atomically with a `.bak` fallback (see `SaveSystem.cs`).
 - **AI**: One enemy type, Unity `NavMeshAgent`-based patrol/chase only. No ML-Agents, no custom pathfinding, no multiple enemy types.
 - **DOTS/ECS**: Used ONLY for collectible coin entities, as a separate pipeline that does not share runtime with the GameObject/MonoBehaviour enemy AI. Do not convert the whole project to ECS. Do not put player, enemy, or UI logic in ECS.
 - **Art assets**: KayKit by Kay Lousberg (itch.io) — free, low-poly, rigged:
-  - `KayKit – Dungeon Pack Remastered` → environment/props
+  - `KayKit – Dungeon Pack` (itch slug `kaykit-dungeon-pack`, currently v1.1) → environment/props. There is no pack literally named "Dungeon Pack Remastered"; this current pack *is* the remake. Do not use `kaykit-dungeon`, which is titled "(Legacy) KayKit - Dungeon Pack".
   - `KayKit – Character Pack: Adventurers` → player character
   - `KayKit – Character Pack: Skeletons` → the single enemy
   - Do not introduce assets from a different visual style without asking first — consistency matters for the demo video.
-- **Version control**: git + GitHub (NOT Plastic SCM, even though the Unity project was initially created with it). Project Settings must have "Visible Meta Files" + "Force Text" serialization enabled so scenes/prefabs are diffable.
+- **Version control**: git + GitHub. Remote: `https://github.com/mvntaha/math-dungeon`. The Plastic SCM workspace the project was created with has been removed (`.plastic/`, `ignore.conf`) — do not reintroduce it. Project Settings are set to "Visible Meta Files" + "Force Text" serialization so scenes/prefabs are diffable. `Packages/manifest.json` and `Packages/packages-lock.json` **are tracked** — the Unity template `.gitignore` excluded `/Packages/`, which would stop a fresh clone from resolving URP, AI Navigation and Newtonsoft; that rule is commented out and must stay that way.
 
 ## Git workflow — follow this exactly
 
@@ -56,6 +56,9 @@ PlayerProfile: profileId, username, avatarId, createdAt, hearts (0-3), coins,
 
 DungeonProgress: dungeonId (1|2|3), completed (bool), challengesSolved[int],
                  attemptsPerChallenge{challengeId: int}, elapsedTimeSeconds
+                 # attemptsPerChallenge is a C# Dictionary<int,int>, serialized by
+                 # Newtonsoft as the SRS-specified keyed object, e.g. {"203": 2}.
+                 # Never store it as an array of {challengeId, attempts} pairs.
 
 Challenge: challengeId, dungeonId, topic, questionType (enum: multiple_choice |
            numerical_input | pattern_match), promptText, options[]? (nullable,
